@@ -94,31 +94,47 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(resp => resp.json())
         .then(bookArray => {
             console.log(book_id)
-            book = bookArray.find(element => element.id === book_id)
-            users = book.users 
+            let book = bookArray.find(element => element.id === book_id)
+            let users = book.users 
             addLike(book.id, users)
         })
     }
 
     const addLike = (id, userArray) => {
         const self = {"id":1, "username":"pouros"}
-        userArray.push(self)
 
-        console.log(userArray)
-        const options = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                "Accept": 'application/json'
-            },
-            body: JSON.stringify({ users: userArray})
+        if (userArray.find(el => el.id === self.id)) {
+            userArray = userArray.filter(element => element.id !== self.id)
+            const options = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": 'application/json'
+                },
+                body: JSON.stringify({ users: userArray })
+            } 
+            fetch(baseUrl + id, options)
+            .then(res => res.json())
+            .then(bookInfo => {
+                renderBookInfo(bookInfo)
+            })
+        } else {
+            userArray.push(self)
+            const options = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": 'application/json'
+                },
+                body: JSON.stringify({ users: userArray})
+            }
+            
+            fetch(baseUrl + id, options)
+            .then(res => res.json())
+            .then(bookInfo => {
+                renderBookInfo(bookInfo)
+            })
         }
-        
-        fetch(baseUrl + id, options)
-        .then(res => res.json())
-        .then(bookInfo => {
-            renderBookInfo(bookInfo)
-        })
     }
 
     fetchBooks()
