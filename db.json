@@ -33,10 +33,6 @@
         {
           "id": 9,
           "username": "alex"
-        },
-        {
-          "id": 1,
-          "username": "pouros"
         }
       ]
     },
@@ -155,14 +151,6 @@
       "author": "Imbolo Mbue",
       "img_url": "http://books.google.com/books/content?id=nEcsDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
-        {
-          "id": 8,
-          "username": "maverick"
-        },
-        {
-          "id": 10,
-          "username": "macejkovic"
-        },
         {
           "id": 1,
           "username": "pouros"

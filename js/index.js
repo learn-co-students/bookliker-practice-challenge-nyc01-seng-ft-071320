@@ -39,9 +39,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     userList.insertAdjacentHTML('beforeend', `<li id="${user.id}">${user.username}</li>`)
                 }
                 showPanel.addEventListener('click', function(e) {
-                    console.log(theBook.users)
+                   
                     if(e.target.matches('button.like-btn')){
-                        console.log((theBook.users.some(object => object.username === "pouros")))
                         if(!(theBook.users.some(object => object.username === "pouros"))) {
                             theBook.users.push({"id":1, "username":"pouros"})
                         }
@@ -62,7 +61,34 @@ document.addEventListener("DOMContentLoaded", function() {
                             for(const user of book.users){
                                 userList.insertAdjacentHTML('beforeend', `<li id="${user.id}">${user.username}</li>`)
                             }
+                            e.target.innerText = "Unlike"
+                            e.target.className = "unlike-btn"
                         })
+                    }
+                    else if (e.target.matches('button.unlike-btn')){
+                        console.log(e.target)
+                        let unlikedArray= theBook.users.filter(user => !(user.username === 'pouros') )
+                        
+                        const options = { 
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Accept: 'application/json'
+                            },
+                            body: JSON.stringify({
+                                "users": unlikedArray
+                            })
+                        }
+                        fetch(`http://localhost:3000/books/${theBook.id}`, options)
+                        .then(response => response.json())
+                        .then(book=> {
+                            userList.innerHTML = ''
+                            for(const user of book.users){
+                                userList.insertAdjacentHTML('beforeend', `<li id="${user.id}">${user.username}</li>`)
+                            }
+                            e.target.innerText = "Like"
+                            e.target.className = "like-btn"
+                        })                        
                     }
                 })
             }
