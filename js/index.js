@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function likeBook(bookObj, arrOfLikes){
         const person = {"id": 1, "username": "pouros"}
 
-        if (arrOfLikes.filter(e => e.username === 'pouros')) {
+        if ((arrOfLikes.find(e => e.username === 'pouros'))) {
             arrOfLikes.pop()
             const options = {
                 method: "PATCH",
