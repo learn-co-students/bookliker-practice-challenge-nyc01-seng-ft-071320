@@ -24,7 +24,7 @@ function render(book){//console.log(book)
             show.innerHTML=""
             const div =document.createElement('div')
             show.appendChild(div)
-            console.log(book.author=="Angela Y. Davis")
+            // console.log(book.author=="Angela Y. Davis")
             div.innerHTML=`<img src='${book.img_url}' alt='${book.author}'>
             <h4 id='book-title'>${book.title}</h4>
             <h4 id='book-subtitle'>${book.subtitle}</h4>
@@ -33,23 +33,17 @@ function render(book){//console.log(book)
             `
             //user management 
             const ul =document.createElement('ul')
-            // ul.id='users-list'
+            ul.id='users-list'
             const btn=document.createElement('button')//attached at the end
             btn.id='like-btn'
             btn.innerText="like"
             // btn.dataset.userId=
             div.appendChild(ul)
             div.appendChild(btn)
-
-            for (const user of book.users){//console.log(user.id)
-                const li =document.createElement('li')
-                li.dataset.id=`${user.id}`
-                li.innerText=`${user.username}`
-                ul.appendChild(li)
-            }
+            createUserlist(book.users)
             // console.log(ul.lastChild.dataset.id==1)
             if (ul.lastChild.dataset.id==1){btn.innerText="unlike"}
-            btn.addEventListener('click',(e)=>{console.log(btn.innerText=="like")
+            btn.addEventListener('click',(e)=>{//console.log(btn.innerText=="like")
                 const user = {"id":1, "username":"pouros"}
                 if (btn.innerText=="like"){// console.log(user) //console.log(book.users)
                     book.users.push(user) // console.log(book.id)// const url ="http://localhost:3000/books/"+book.id // console.log(url)
@@ -63,13 +57,12 @@ function render(book){//console.log(book)
                             users: book.users
                         })
                     }).then(res=>res.json())
-                    let bars = document.createElement('li')
-                    bars.dataset.id=`${user.id}`
-                    bars.innerText=`${user.username}`
-                    ul.appendChild(bars)
-                    btn.innerText="unlike"
-                    list.innerHTML=""
-                    get()
+                    .then(book=>{
+                        const usersList = document.querySelector('#users-list')
+                        usersList.innerHTML=""
+                        createUserlist(book.users)
+                        usersList.nextElementSibling.innerText="unlike"
+                    })
                 }else{//console.log(book.users)
                     book.users.pop()
                     fetch('http://localhost:3000/books/'+book.id, {
@@ -80,14 +73,26 @@ function render(book){//console.log(book)
                         },
                         body: JSON.stringify({
                             users: book.users
-                        })
+                        })   
                     }).then(res=>res.json())
-                    btn.innerText="like"    
-                    list.innerHTML=""
-                    ul.lastChild.remove()
-                    get()
+                    .then(book=>{
+                        const usersList = document.querySelector('#users-list')
+                        usersList.innerHTML=""
+                        createUserlist(book.users)
+                        usersList.nextElementSibling.innerText="like"
+                    })
                 }
             })//this is the end of on my button 
 
         })//This is the end of list and add event listener
 }//This is the end of render books
+
+function createUserlist (users){
+    for (const user of users){
+        const usersList = document.querySelector('#users-list')
+        const li =document.createElement('li')
+        li.dataset.id=`${user.id}`
+        li.innerText=`${user.username}`
+        usersList.appendChild(li)
+    }
+}
