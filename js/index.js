@@ -89,12 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
         ul.append(button)
     }
 
-    const getBookLikes = (book_id) => {
+    const getBookLikes = (bookId) => {
         fetch(baseUrl)
         .then(resp => resp.json())
         .then(bookArray => {
             console.log(book_id)
-            let book = bookArray.find(element => element.id === book_id)
+            let book = bookArray.find(element => element.id === bookId)
             let users = book.users 
             addLike(book.id, users)
         })
