@@ -1,28 +1,13 @@
 const ce = tag => document.createElement(tag)
 const qs = selector => document.querySelector(selector)
 const showPanel = qs('#show-panel')
-const bookImage = ce('img')
-showPanel.append(bookImage)
-const bookTitle = ce('h2')
-showPanel.append(bookTitle)
-const bookSubtitle = ce('h2')
-showPanel.append(bookSubtitle)
-const bookAuthor = ce('h2')
-showPanel.append(bookAuthor)
-const bookDescription = ce('p')
-showPanel.append(bookDescription)
-const userUl = ce('ul')
-showPanel.append(userUl)
-const likeBtn = ce('button')
-showPanel.append(likeBtn)
-likeBtn.style.display = 'none'
-likeBtn.className = 'like'
+const ul = qs('#list')
 
 const clickHandler = () => {
   document.addEventListener('click', e => {
     switch (e.target.className) {
       case 'book':
-        showBook(e.target.dataset.bookId)
+        getBook(e.target.dataset.bookId)
         break
       case 'like':
         toggleLike(e.target)
@@ -33,8 +18,11 @@ const clickHandler = () => {
   })
 }
 
-const listBooks = (book) => {
-  const ul = qs('#list')
+const renderBooks = books => {
+  books.forEach(renderBook)
+}
+
+const renderBook = book => {
   const li = ce('li')
   ul.append(li)
   li.textContent = book.title
@@ -45,36 +33,37 @@ const listBooks = (book) => {
 const getBooks = () => {
   fetch('http://localhost:3000/books')
   .then(res => res.json())
-  .then(books => books.forEach(listBooks))
+  .then(renderBooks)
 }
 
-const showBook = (id) => {
+const getBook = (id) => {
   fetch(`http://localhost:3000/books/${id}`)
   .then(res => res.json())
-  .then(book => {
-    showUsers(book)
-    showPanel.dataset.id = book.id
-    bookImage.src = book.img_url
-    bookTitle.textContent = book.title
-    bookSubtitle.textContent = book.subtitle
-    bookAuthor.textContent = book.author
-    bookDescription.textContent = book.description
-    likeBtn.style.display = ''
-    if (book.users.filter(user => user.id === 1).length > 0) {
-      likeBtn.textContent = 'UNLIKE'
-    } else {
-      likeBtn.textContent = 'LIKE'
-    }
-  })
+  .then(showBook)
 }
 
-const showUsers = (book) => {
-  userUl.innerHTML = ''
-  book.users.forEach(user => {
-    const userLi = ce('li')
-    userUl.append(userLi)
-    userLi.textContent = user.username
-  })
+const showBook = (book) => {
+  showPanel.innerHTML = ''
+
+  const likeStatus = book.users.filter(user => user.id === 1).length > 0 ? 'UNLIKE' : 'LIKE'
+
+  showPanel.dataset.id = book.id
+  showPanel.innerHTML = `
+    <img src="${book.img_url}">
+    <h2>${book.title}</h2>
+    <h2>${book.subtitle}</h2>
+    <h2>${book.author}</h2>
+    <p>${book.description}</p>
+    <ul id="user-list"></ul>
+    <button class="like">${likeStatus}</button>
+  `
+  book.users.forEach(showUser)
+}
+
+const showUser = (user) => {
+  const userLi = ce('li')
+  qs('#user-list').append(userLi)
+  userLi.textContent = user.username
 }
 
 const toggleLike = (target) => {
@@ -85,14 +74,10 @@ const toggleLike = (target) => {
   .then(book => {
     if (target.textContent === 'LIKE') {
       addUsers(book) // this function should make a fetch request to update the users property on a given book
-      
     } else {
       removeUsers(book)
     }
   })
-  // target.textContent === 'LIKE'
-  // showBook(target.parentElement.dataset.id)
-
 }
 
 const addUsers = book => {
@@ -112,7 +97,7 @@ const addUsers = book => {
   }
   fetch(`http://localhost:3000/books/${book.id}`, options)
   .then(res => res.json())
-  .then(book => showUsers(book))
+  .then(showBook)
 }
 
 const removeUsers = book => {
@@ -130,7 +115,7 @@ const removeUsers = book => {
   }
   fetch(`http://localhost:3000/books/${book.id}`, options)
   .then(res => res.json())
-  .then(book => showUsers(book))
+  .then(showBook)
 }
 
 clickHandler()
