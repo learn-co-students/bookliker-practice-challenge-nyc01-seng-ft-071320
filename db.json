@@ -9,12 +9,8 @@
       "img_url": "https://books.google.com/books/content?id=3S8Rwr-iBdoC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 2,
-          "username": "auer"
-        },
-        {
-          "id": 8,
-          "username": "maverick"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     },
@@ -69,13 +65,19 @@
       "author": "Angela Y. Davis ",
       "img_url": "http://books.google.com/books/content?id=S3yODQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
+        [
+          {
+            "id": 1,
+            "username": "pouros"
+          },
+          {
+            "id": 12,
+            "username": "johnny"
+          }
+        ],
         {
-          "id": 10,
-          "username": "macejkovic"
-        },
-        {
-          "id": 8,
-          "username": "maverick"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     },
@@ -87,18 +89,7 @@
       "author": "Alok Vaid-Menon",
       "img_url": "https://books.google.com/books/content?id=hxGuDwAAQBAJ&printsec=frontcover&img=1&zoom=2&edge=curl&source=gbs_api",
       "users": [
-        {
-          "id": 10,
-          "username": "macejkovic"
-        },
-        {
-          "id": 4,
-          "username": "ann"
-        },
-        {
-          "id": 8,
-          "username": "maverick"
-        }
+        3
       ]
     },
     {
@@ -110,12 +101,8 @@
       "img_url": "https://books.google.com/books/content?id=54vbDgAAQBAJ&printsec=frontcover&img=1&zoom=2&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 7,
-          "username": "steuber"
-        },
-        {
-          "id": 4,
-          "username": "ann"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     },
@@ -146,16 +133,8 @@
       "img_url": "http://books.google.com/books/content?id=EtVfCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 9,
-          "username": "alex"
-        },
-        {
-          "id": 3,
-          "username": "marvin"
-        },
-        {
-          "id": 2,
-          "username": "auer"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     },
@@ -190,12 +169,8 @@
       "img_url": "http://books.google.com/books/content?id=fc8PDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 8,
-          "username": "maverick"
-        },
-        {
-          "id": 10,
-          "username": "macejkovic"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     },
@@ -208,12 +183,8 @@
       "img_url": "http://books.google.com/books/content?id=nEcsDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 8,
-          "username": "maverick"
-        },
-        {
-          "id": 10,
-          "username": "macejkovic"
+          "id": 1,
+          "username": "pouros"
         }
       ]
     }
